@@ -1,0 +1,8 @@
+pandas
+numpy
+textblob
+scikit-learn
+transformers
+torch
+tqdm
+ipywidgets

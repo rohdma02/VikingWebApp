@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mb-4">Recommendation Results</h2>
+    <div class="row">
+        {% for restaurant_info in top_restaurants_info %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ loop.index }}. {{ restaurant_info['Name'] }}</h4>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt"></i> {{ restaurant_info['City'] }}, {{ restaurant_info['State'] }}
+                        </p>
+                        <hr>
+                        <h5>Top {{ top_n }} similar cities in Iowa:</h5>
+                        <ul class="list-group list-group-flush">
+                            {% for similar_city in recommendation_system.find_similar_cities_in_iowa(restaurant_info['City'], top_n) %}
+                                <li class="list-group-item">{{ similar_city }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
