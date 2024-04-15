@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Doc</h1>
+<h1>Documentation</h1>
+<h3>How it works?</h3>
+<p>1. The user visits the index page (`/`) and is presented with a form to select a business type from a dropdown menu.</p>
+<p>2. When the user submits the form, a POST request is sent to the `/recommend` route.</p>
+<p>3. The `/recommend` route performs the following steps:
+    <li class="">Retrieves the selected business type from the form data.</li>
+    <li class="">Calls the `find_top_restaurant_in_category` function to find the top restaurant in the selected category based on ratings and reviews.</li>
+    <li class="">Retrieves the city of the top restaurant.</li>
+    <li class="">Calls the `finding_similar_cities` function to find the top 5 similar cities to the restaurant's city based on demographic data.</li>
+    <li class="">Renders the `recommendation.html` template with the top restaurant details and the list of similar cities.</li>
+</p>
+<p>4. The `recommendation.html` template displays the top restaurant information, including the city, business name, address, rating, and reviews. It also shows the list of top 5 similar cities</p>
+<p></p>
 {% endblock %}

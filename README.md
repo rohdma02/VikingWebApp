@@ -13,11 +13,13 @@ Viking is a web application built with Flask
 
 - For Windows:
   ```
+  python -m venv virtualEnvironmentName
   venv\Scripts\activate
   ```
 
 - For macOS and Linux:
   ```
+  python -m venv virtualEnvironmentName
   source venv/bin/activate
   ```
 
