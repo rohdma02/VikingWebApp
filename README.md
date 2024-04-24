@@ -14,13 +14,13 @@ Viking is a web application built with Flask
 - For Windows:
   ```
   python -m venv virtualEnvironmentName
-  venv\Scripts\activate
+  virtualEnvironmentName\Scripts\activate
   ```
 
 - For macOS and Linux:
   ```
   python -m venv virtualEnvironmentName
-  source venv/bin/activate
+  source virtualEnvironmentName/bin/activate
   ```
 
 Your command prompt should now show the name of the virtual environment.
@@ -59,21 +59,23 @@ interface/
 │   │   ├── includes/
 │   │   │   ├── footer.html
 │   │   │   └── nav.html
+│   │   ├── about.html
+│   │   ├── base.html
+│   │   ├── doc.html
 │   │   ├── index.html
-│   │   └── base.html
+│   │   └── recommendation.html
 │   ├── static/
 │   │   ├── css/
-│   │   │   └── main.css
-│   │   ├── data/
-│   │   │   ├── images/
-│   │   │   └── csv/
-│   │   └── js/
-│   │       └── script.js
+│   │        ├── about.css
+│   │   │    └── main.css
+│   │   └── data/
+│   │        ├── bert_embeddings/
+│   │        ├──demographics/
+│   │        ├── images/
+│   │        └── csv/
+│   │   
 │   ├── init.py
 │   ├── config.py
-│   ├── forms.py
-│   ├── models.py
-│   ├── util.py
 │   └── views.py
 │
 ├── README.md
@@ -84,12 +86,9 @@ interface/
 - The `app` directory contains the Flask application code.
   - The `templates` directory contains the HTML templates used for rendering the web pages.
     - The `includes` directory contains reusable HTML components such as the navigation bar and footer.
-  - The `static` directory contains static assets such as CSS stylesheets, images, CSV files, and JavaScript files.
+  - The `static` directory contains static assets such as CSS stylesheets, images, CSV files, and  files.
   - `__init__.py` initializes the Flask app and sets up the necessary configurations.
   - `config.py` contains configuration settings for the application.
-  - `forms.py` defines the forms used in the application.
-  - `models.py` defines the data models used in the application.
-  - `util.py` contains utility functions used in the application.
   - `views.py` defines the routes and handles the requests.
 - `README.md` is the file you are currently reading, providing an overview of the project.
 - `requirements.txt` lists the required Python packages for the project.
