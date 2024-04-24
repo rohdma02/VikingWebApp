@@ -105,12 +105,9 @@ Do not make changes in the main branch! If you'd like to contribute to the proje
 4. Push your changes to your forked repository.
 5. Submit a pull request detailing your changes.
 
-
-# PROGRESS
 ## Business Recommendation Feature
 
 The Business Recommendation feature allows users to find the top restaurant in a specific business category and get recommendations for similar cities based on demographic data.
-
 ### How It Works
 
 1. The user visits the index page (`/`) and is presented with a form to select a business type from a dropdown menu.
@@ -119,41 +116,50 @@ The Business Recommendation feature allows users to find the top restaurant in a
 
 3. The `/recommend` route performs the following steps:
    - Retrieves the selected business type from the form data.
-   - Calls the `find_top_restaurant_in_category` function to find the top restaurant in the selected category based on ratings and reviews.
-   - Retrieves the city of the top restaurant.
-   - Calls the `finding_similar_cities` function to find the top 5 similar cities to the restaurant's city based on demographic data.
-   - Renders the `recommendation.html` template with the top restaurant details and the list of similar cities.
+   - Calls the `find_top_restaurants_info` function to find the top restaurants in the selected category based on the category dictionary.
+   - For each top restaurant, calls the `find_similar_cities_in_iowa` function to find the top 3 similar cities in Iowa based on the restaurant's city and demographic data.
+   - Renders the `recommendation.html` template with the top restaurants' information and the list of similar cities for each restaurant.
 
-4. The `recommendation.html` template displays the top restaurant information, including the city, business name, address, rating, and reviews. It also shows the list of top 5 similar cities.
+4. The `recommendation.html` template displays a table with the top restaurants' information, including the restaurant name, location (city and state), and the top 3 similar cities in Iowa for each restaurant.
 
 ### Functions
 
 The Business Recommendation feature relies on the following functions:
 
-- `create_category_dict(csv_file)`: Creates a dictionary of business categories and their corresponding restaurant information from a CSV file.
-- `find_top_restaurant_in_category(category_dict, category)`: Finds the top restaurant in a specific category based on ratings and reviews.
-- `finding_similar_cities(csv_file, target_city, exclude_restaurant=None)`: Finds the top 5 similar cities to a target city based on demographic data from a CSV file.
+- `read_data(file_path)`: Reads data from a CSV file and returns a pandas DataFrame.
+- `clean_numerical_data(data)`: Cleans the numerical data in a DataFrame by converting columns to numeric data type.
+- `save_bert_embeddings(all_state_wiki_descriptions, all_state_bert_embeddings, folder_path)`: Saves the BERT embeddings and wiki descriptions to a folder.
+- `load_bert_embeddings(folder_path)`: Loads the BERT embeddings and wiki descriptions from a folder.
+- `get_bert_embeddings(sentences)`: Extracts BERT embeddings for a list of sentences.
+- `combine_features(data, bert_embeddings)`: Combines numerical features and BERT embeddings.
+- `apply_pca(combined_features)`: Applies PCA for dimensionality reduction.
+- `create_category_dict(data_frame)`: Creates a dictionary of business categories and their corresponding restaurant information from a DataFrame.
+- `find_top_restaurants_in_category(category_dict, category)`: Finds the top restaurants in a specific category based on the category dictionary.
+- `find_top_restaurants_info(category_dict, category, top_n)`: Finds the top N restaurants' information in a specific category.
+- `find_similar_cities_in_iowa(city_name, all_state_demo, iowa_indices, cos_sim_matrix, top_n)`: Finds the top N similar cities in Iowa based on a target city and cosine similarity matrix.
 
 ### Data Files
 
 The feature uses the following data files:
 
-- `rating_reviews.csv`: Contains restaurant rating and review data.
-- `clean_merged_iowa_demo_with_description.csv`: Contains demographic data for cities.
+- `all_state_rating_rev_common_cities.csv`: Contains restaurant rating and review data for all states.
+- `all_state_demo_common_cities.csv`: Contains demographic data for cities in all states.
 
-Make sure these files are located in the `app/static/data/csv/` directory.
+Make sure these files are located in the `app/static/data/restaurants/` and `app/static/data/demographics/` directories, respectively.
+
+### BERT Embeddings
+
+The feature uses BERT embeddings to represent the textual data (wiki descriptions) of cities. The BERT embeddings are stored in the `app/static/data/bert_embeddings/` directory. If the embeddings are not found, they will be generated and saved for future use.
 
 ### Template Files
 
 The feature uses the following template files:
 
 - `index.html`: Renders the form for selecting a business type.
-- `recommendation.html`: Renders the recommendation results, including the top restaurant and similar cities.
-
-### Error Handling
-
-If no demographic data is found for the top restaurant's city, an empty list of similar cities will be returned, and no similar cities will be displayed in the recommendation results.
+- `recommendation.html`: Renders the recommendation results, including the top restaurants and similar cities for each restaurant.
 
 ### Future Improvements
 
-- Enhance the algorithm to work for every type of business.
+- Enhance the algorithm to handle cases where no restaurants are found for the selected category.
+- Improve the efficiency of the code by optimizing the data processing and similarity calculations.
+- Expand the feature to include more states and cities beyond Iowa.
