@@ -166,9 +166,9 @@ def find_similar_cities_in_iowa(city_name, all_state_demo, iowa_indices, cos_sim
 def main():
     # Read the data
     restaurants_common = read_data(
-        "data/restaurants/all_state_rating_rev_common_cities.csv")
+        "../static/data/restaurants/all_state_rating_rev_common_cities.csv")
     all_state_demo = read_data(
-        "data/demographics/all_state_demo_common_cities.csv")
+        "../static/data/demographics/all_state_demo_common_cities.csv")
     all_state_demo = clean_numerical_data(all_state_demo)
 
     # Load or get BERT embeddings

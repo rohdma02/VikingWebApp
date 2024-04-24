@@ -20,6 +20,7 @@
     .table-custom tr:nth-child(even){background-color: #f2f2f2;}
     .table-custom tr:hover {background-color: #ddd;}
 </style>
+
 <div class="container">
     <h2 class="text-center mb-4">Recommendation Results</h2>
     <table class="table-custom">
@@ -36,10 +37,10 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>{{ restaurant_info['Name'] }}</td>
-                <td>{{ restaurant_info['City'] }}, {{ restaurant_info['State'] }}</td>
+                <td>{{ restaurant_info['City'].split(' ')[0].title() }} City, {{ restaurant_info['State'].title() }}</td>
                 <td>
-                    {% for similar_city, similarity_score in similar_cities[loop.index - 1] %}
-                        {{ similar_city }} (Similarity: {{ similarity_score }})<br>
+                    {% for similar_city, _ in similar_cities[loop.index - 1] %}
+                        {{ similar_city.title() }}<br>
                     {% endfor %}
                 </td>
             </tr>
