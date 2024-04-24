@@ -1,28 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .table-custom {
+        width: 100%;
+        background-color: #fff;
+        border-collapse: collapse;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Shadow for depth */
+    }
+    .table-custom th, .table-custom td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    .table-custom th {
+        background-color: #007BFF; /* Bootstrap primary color */
+        color: white;
+        text-align: left;
+    }
+    .table-custom tr:nth-child(even){background-color: #f2f2f2;}
+    .table-custom tr:hover {background-color: #ddd;}
+</style>
 <div class="container">
     <h2 class="text-center mb-4">Recommendation Results</h2>
-    <div class="row">
-        {% for restaurant_info in top_restaurants_info %}
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ loop.index }}. {{ restaurant_info['Name'] }}</h4>
-                        <p class="card-text">
-                            <i class="fas fa-map-marker-alt"></i> {{ restaurant_info['City'] }}, {{ restaurant_info['State'] }}
-                        </p>
-                        <hr>
-                        <h5>Top {{ top_n }} similar cities in Iowa:</h5>
-                        <ul class="list-group list-group-flush">
-                            {% for similar_city in recommendation_system.find_similar_cities_in_iowa(restaurant_info['City'], top_n) %}
-                                <li class="list-group-item">{{ similar_city }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Restaurant Name</th>
+                <th>Location</th>
+                <th>Top Similar Cities in Iowa</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for restaurant_info in top_restaurants_info %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ restaurant_info['Name'] }}</td>
+                <td>{{ restaurant_info['City'] }}, {{ restaurant_info['State'] }}</td>
+                <td>
+                    {% for similar_city, similarity_score in similar_cities[loop.index - 1] %}
+                        {{ similar_city }} (Similarity: {{ similarity_score }})<br>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

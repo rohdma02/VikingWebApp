@@ -1,15 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="{{ url_for('main.recommend') }}" method="POST">
-    <label for="category">Choose a business type:</label>
-    <select name="category" id="category">
+<div class="form-container">
+  <h2 class="text-center">Welcome to Business Recommendation System</h2>
+  <form action="{{ url_for('main.recommend') }}" method="POST">
+    <div class="form-group">
+      <label for="category">Choose a business type:</label>
+      <select name="category" id="category" class="form-control">
         {% for business_type in business_types %}
-            <option value="{{ business_type }}">{{ business_type }}</option>
+        <option value="{{ business_type }}">{{ business_type }}</option>
         {% endfor %}
-    </select>
-    <label for="top_n">Number of top restaurants to show:</label>
-    <input type="number" name="top_n" id="top_n" value="1" min="1" max="3">
-    <button type="submit">Get Recommendations</button>
-</form>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="top_n">Number of top restaurants to show:</label>
+      <input type="number" name="top_n" id="top_n" value="1" min="1" max="3" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Get Recommendations</button>
+  </form>
+</div>
 {% endblock %}
